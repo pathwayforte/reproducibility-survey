@@ -41,10 +41,16 @@ def gsea():
     type=click.Path(file_okay=True, dir_okay=False, exists=True),
     required=True
     )
-def run(matrix, cls, gmt):
+@click.option(
+    '-p', '--pkl',
+    help="path to Miniml pkl",
+    type=click.Path(file_okay=True, dir_okay=False, exists=True),
+    required=True
+    )
+def run(matrix, cls, gmt, pkl):
     """Run GSEA."""
-    click.echo("Start")
-    Miniml_data = pd.read_pickle("data/Miniml_Data.pkl")
+    click.echo("Run {} with {}, {}, {}".format(matrix, cls, gmt, pkl))
+    Miniml_data = pd.read_pickle(pkl)
     Miniml_data.iloc[1, :].isnull().values.any()
     Miniml_data.set_index('ID', inplace=True)
     click.echo('Reading the matrix file')
