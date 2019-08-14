@@ -83,7 +83,7 @@ def run(matrix, cls, gmt, pkl):
         format='png',
     )
     print(gs_res.res2d.index)
-    gs_res.res2d.to_pickle('data/33/gsea_result.pkl')
+    gs_res.res2d.to_csv('gsea_result.tsv', sep='\t')
     click.echo('End')
 
 
