@@ -7,6 +7,7 @@ import gseapy as gp
 import pandas as pd
 import numpy as np
 import click
+import pickle
 
 logger = logging.getLogger(__name__)
 
@@ -84,6 +85,8 @@ def run(matrix, cls, gmt, pkl):
     )
     print(gs_res.res2d.index)
     gs_res.res2d.to_csv('gsea_result.tsv', sep='\t')
+    with open('gsea_result.pkl', 'wb') as pickle_file:
+        pickle.dump(gs_res, pickle_file)
     click.echo('End')
 
 
