@@ -85,8 +85,8 @@ def run(matrix, cls, gmt, pkl):
     )
     print(gs_res.res2d.index)
     gs_res.res2d.to_csv('gsea_result.tsv', sep='\t')
-    with open('gsea_result.pkl', 'wb') as pickle_file:
-        pickle.dump(gs_res, pickle_file, protocol=4)
+    gs_res.res2d.to_pickle('gsea_result_res2d.pkl')
+    gs_res.heatmat.to_pickle('gsea_result_heatmat.pkl')
     click.echo('End')
 
 
