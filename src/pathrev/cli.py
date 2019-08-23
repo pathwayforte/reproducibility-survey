@@ -76,7 +76,7 @@ def run(matrix, cls, gmt):
         cls=cls,  # cls=class_vector
         # set permutation_type to phenotype if samples >=15
         permutation_type='phenotype',
-        permutation_num=10,  # reduce number to speed up test
+        permutation_num=100,  # reduce number to speed up test
         outdir=None,  # do not write output to disk
         no_plot=True,  # Skip plotting
         method='signal_to_noise',
