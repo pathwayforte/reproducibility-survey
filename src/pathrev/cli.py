@@ -50,7 +50,7 @@ def gsea():
 #     )
 def run(matrix, cls, gmt):
     """Run GSEA."""
-    click.echo("Run {} with {}, {}, {}".format(matrix, cls, gmt))
+    click.echo("Run {} with {}, {}".format(matrix, cls, gmt))
     # Miniml_data = pd.read_pickle(pkl)
     # Miniml_data.iloc[1, :].isnull().values.any()
     # Miniml_data.set_index('ID', inplace=True)
