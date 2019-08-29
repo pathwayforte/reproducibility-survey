@@ -83,9 +83,9 @@ def run(matrix, cls, gmt):
         processes=4,
         format='png',
     )
-    gs_res.res2d.to_csv('gsea_result.tsv', sep='\t')
-    gs_res.res2d.to_pickle('gsea_result_res2d.pkl')
-    gs_res.heatmat.to_pickle('gsea_result_heatmat.pkl')
+    gs_res.res2d.to_csv('results/31316060/gsea_result.tsv', sep='\t')
+    gs_res.res2d.to_pickle('results/31316060/gsea_result_res2d.pkl')
+    gs_res.heatmat.to_pickle('results/31316060/gsea_result_heatmat.pkl')
     click.echo('End')
 
 
