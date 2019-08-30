@@ -55,7 +55,7 @@ def run(matrix, cls, gmt):
     # Miniml_data.iloc[1, :].isnull().values.any()
     # Miniml_data.set_index('ID', inplace=True)
     # click.echo('Reading the matrix file')
-    df = pd.read_csv(matrix, sep='\t', header=0)
+    df = pd.read_csv(matrix, sep='\t', header=0, index_col=0)
     # click.echo('Processing the matrix file')
     # df['ID_REF'] = df['ID_REF'].astype(str)
     # for i in df.index:
