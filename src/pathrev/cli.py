@@ -3,11 +3,10 @@
 """Command line interface."""
 
 import logging
-import gseapy as gp
-import pandas as pd
-import numpy as np
 import click
-import pickle
+from pathrev.pipeline import (
+    do_gsea, do_preranked,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -17,53 +16,58 @@ def main():
     """Run pathrev."""
     logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s - %(message)s")
 
-
-@main.group()
-def gsea():
-    """GSEA functionalities."""
-
-
-@gsea.command(help='Run GSEA')
-@click.option(
+matrix_option = click.option(
     '-m', '--matrix',
     help="path to matrix",
     type=click.Path(file_okay=True, dir_okay=False, exists=True),
     required=True
     )
-@click.option(
+rnk_option = click.option(
+    '-r', '--rank',
+    help="path to rank file",
+    type=click.Path(file_okay=True, dir_okay=False, exists=True),
+    required=True
+    )
+phenotype_option = click.option(
     '-c', '--cls',
     help="path to cls file",
     type=click.Path(file_okay=True, dir_okay=False, exists=True),
     required=True
     )
-@click.option(
+gene_set_option = click.option(
     '-g', '--gmt',
     help="path to gmt file",
     type=click.Path(file_okay=True, dir_okay=False, exists=True),
     required=True
     )
-def run(matrix, cls, gmt):
-    """Run GSEA."""
-    click.echo("Run {} with {}, {}".format(matrix, cls, gmt))
-    df = pd.read_csv(matrix, sep='\t', header=0, index_col=0)
-    click.echo('Running GSEA')
-    gs_res = gp.gsea(
-        data=df,  # or data='./P53_resampling_data.txt'
-        gene_sets=gmt,  # enrichr library names
-        cls=cls,  # cls=class_vector
-        # set permutation_type to phenotype if samples >=15
-        permutation_type='phenotype',
-        permutation_num=100,  # reduce number to speed up test
-        outdir=None,  # do not write output to disk
-        no_plot=True,  # Skip plotting
-        method='signal_to_noise',
-        processes=4,
-        format='png',
+out_dir_option = click.option(
+    '-o', '--out',
+    help="path to output directory",
+    type=click.Path(file_okay=False, dir_okay=True, exists=False),
+    required=True
     )
-    gs_res.res2d.to_csv('results/31316060/gsea_result.tsv', sep='\t')
-    gs_res.res2d.to_pickle('results/31316060/gsea_result_res2d.pkl')
-    gs_res.heatmat.to_pickle('results/31316060/gsea_result_heatmat.pkl')
-    click.echo('End')
+
+
+@matrix_option
+@phenotype_option
+@gene_set_option
+@out_dir_option
+@main.group()
+def gsea(matrix, cls, gmt, out_dir):
+    """Run normal GSEA with a matrix file."""
+    click.echo("Running GSEA on {} with {}, {} and outputting to {}".format(matrix, cls, gmt, out_dir))
+    do_gsea(matrix, cls, gmt, out_dir)
+    click.echo('Done with GSEA analysis')
+
+@rnk_option
+@gene_set_option
+@out_dir_option
+@main.group()
+def prerank(rnk, gmt, out_dir):
+    """Run prerank GSEA with a sorted rank file."""
+    click.echo("Running GSEA-PreRanked on {} with {} and outputting to {}".format(rnk, gmt, out_dir))
+    do_preranked(rnk, gmt, out_dir)
+    click.echo('Done with prerank analysis')
 
 
 if __name__ == '__main__':
