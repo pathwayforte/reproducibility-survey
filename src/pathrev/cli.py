@@ -52,7 +52,7 @@ out_dir_option = click.option(
 @phenotype_option
 @gene_set_option
 @out_dir_option
-@main.group()
+@main.command()
 def gsea(matrix, cls, gmt, out_dir):
     """Run normal GSEA with a matrix file."""
     click.echo("Running GSEA on {} with {}, {} and outputting to {}".format(matrix, cls, gmt, out_dir))
@@ -62,7 +62,7 @@ def gsea(matrix, cls, gmt, out_dir):
 @rnk_option
 @gene_set_option
 @out_dir_option
-@main.group()
+@main.command()
 def prerank(rnk, gmt, out_dir):
     """Run prerank GSEA with a sorted rank file."""
     click.echo("Running GSEA-PreRanked on {} with {} and outputting to {}".format(rnk, gmt, out_dir))
