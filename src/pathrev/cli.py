@@ -23,7 +23,7 @@ matrix_option = click.option(
     required=True
     )
 rnk_option = click.option(
-    '-r', '--rank',
+    '-r', '--rnk',
     help="path to rank file",
     type=click.Path(file_okay=True, dir_okay=False, exists=True),
     required=True
@@ -41,28 +41,28 @@ gene_set_option = click.option(
     required=True
     )
 out_dir_option = click.option(
-    '-o', '--out',
+    '-o', '--out_dir',
     help="path to output directory",
     type=click.Path(file_okay=False, dir_okay=True, exists=False),
     required=True
     )
 
-
+@main.command()
 @matrix_option
 @phenotype_option
 @gene_set_option
 @out_dir_option
-@main.command()
 def gsea(matrix, cls, gmt, out_dir):
     """Run normal GSEA with a matrix file."""
     click.echo("Running GSEA on {} with {}, {} and outputting to {}".format(matrix, cls, gmt, out_dir))
     do_gsea(matrix, cls, gmt, out_dir)
     click.echo('Done with GSEA analysis')
 
+
+@main.command()
 @rnk_option
 @gene_set_option
 @out_dir_option
-@main.command()
 def prerank(rnk, gmt, out_dir):
     """Run prerank GSEA with a sorted rank file."""
     click.echo("Running GSEA-PreRanked on {} with {} and outputting to {}".format(rnk, gmt, out_dir))
