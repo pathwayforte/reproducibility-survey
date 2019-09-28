@@ -8,13 +8,13 @@ Installation
 
 .. code-block:: sh
 
-    python3 -m pip install git+FIXME
+    python3 -m pip install git+https://github.com/pathwayforte/reproducibility-survey.git
 
 2. or in editable mode with:
 
 .. code-block:: sh
 
-    git clone FIXME
+    git clone https://github.com/pathwayforte/reproducibility-survey.git
 
 .. code-block:: sh
 
